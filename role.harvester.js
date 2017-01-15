@@ -27,7 +27,11 @@ var roleHarvester = {
             var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
                 filter: { structureType: STRUCTURE_EXTENSION}
             });
-            var sortedExtensions = extensions.sort();
+            var sortedExtensions = extensions.sort(function(a,b){
+                if (a.energy < b.energy) return -1;
+                if (a.energy > b.energy) return 1;
+                return 0;
+            });
             if (sortedExtensions[0].energy < sortedExtensions[0].energyCapacity){
                 if (creep.transfer(sortedExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(sortedExtensions[0]);
@@ -48,3 +52,11 @@ var roleHarvester = {
 };
 
 module.exports = roleHarvester;
+
+JSON.stringify(Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+                filter: { structureType: STRUCTURE_EXTENSION}
+            }).sort(function(a,b){
+                if (a.energy < b.energy) return -1;
+                if (a.energy > b.energy) return 1;
+                return 0;
+            }));
