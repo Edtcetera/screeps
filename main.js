@@ -1,6 +1,8 @@
+var _ = require('lodash');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleMaintainer = require('role.maintainer');
 
 module.exports.loop = function () {
     
@@ -14,6 +16,7 @@ module.exports.loop = function () {
     var harvesterCount = 0;
     var upgraderCount = 0;
     var builderCount = 0;
+    var maintainerCount = 0;
     var spawn = Game.spawns.Spawn1;
 
 
@@ -31,17 +34,25 @@ module.exports.loop = function () {
             roleBuilder.run(creep);
             builderCount++;
         }
+        if (creep.memory.role == 'maintainer'){
+            roleMaintainer.run(creep);
+            maintainerCount++;
+        }
     }
-    if (harvesterCount < 4 && spawn.canCreateCreep([WORK,CARRY,MOVE]) == OK){
+    
+    if (harvesterCount < 5){
         spawn.createCreep([WORK, CARRY, MOVE], null, {role: 'harvester'});
     }
     
-    if (upgraderCount < 5 && spawn.canCreateCreep([WORK,CARRY,MOVE]) == OK){
+    else if (upgraderCount < 6){
         spawn.createCreep([WORK, CARRY, MOVE], null, {role: 'upgrader'}); 
     }
-    /*
-    if (builderCount < 4 && spawn.canCreateCreep([WORK,CARRY,MOVE]) == OK){
-        spawn.createCreep([WORK,CARRY,MOVE], null, {role: 'builder'});
+    
+    else if (builderCount < 5){
+        spawn.createCreep([WORK, CARRY, MOVE], null, {role: 'builder'});
     }
-    */
+    
+    else if (maintainerCount < 5){
+        spawn.createCreep([WORK, CARRY, MOVE], null, {role: 'maintainer'});
+    }
 }
