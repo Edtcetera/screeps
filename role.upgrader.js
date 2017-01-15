@@ -1,5 +1,5 @@
 /*TASKS UPGRADERS SHOULD DO
-    1. Pickup resources from storage
+    1. Pickup resources from storage //todo
     2. Upgrade Controller
 */
 

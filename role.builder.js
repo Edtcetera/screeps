@@ -2,7 +2,6 @@
     1. Build storage for resource dropoff/pickup
     2. Build roads for creeps
     3. Build defences
-    4. Maintain
 */
 
 var roleBuilder = {

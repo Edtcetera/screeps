@@ -1,6 +1,6 @@
 /*TASKS HARVESTERS SHOULD DO
     1. Harvest nodes
-    2. Drop off at storages
+    2. Drop off at storages //todo
 */
 
 var roleHarvester = {
