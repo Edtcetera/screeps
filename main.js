@@ -51,11 +51,11 @@ module.exports.loop = function () {
     TOUGH - 10
     */
     var MAX_HARVESTER = 5;
-    var MAX_UPGRADER = 6;
-    var MAX_BUILDER = 5;
-    var MAX_MAINTAINER = 5;
+    var MAX_UPGRADER = 5;
+    var MAX_BUILDER = 3;
+    var MAX_MAINTAINER = 2;
     
-    for(var i = 0; i < 6; i++){
+    for(var i = 0; i < 5; i++){
         if (harvesterCount < MAX_HARVESTER){
             spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Harvester ' + (i+1), {role: 'harvester'});
         }
