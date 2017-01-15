@@ -26,6 +26,10 @@ var roleMaintainer = {
                     creep.moveTo(targets[0]);
                 }
             }
+            else{
+                creep.say('IDLE');
+                console.log('maintainer is idle');
+            }
 	    }
 	    else {
 	        var sources = creep.room.find(FIND_SOURCES);

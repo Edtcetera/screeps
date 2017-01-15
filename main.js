@@ -4,6 +4,11 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleMaintainer = require('role.maintainer');
 
+var MAX_HARVESTER = 5;
+var MAX_UPGRADER = 8;
+var MAX_BUILDER = 3;
+var MAX_MAINTAINER = 2;
+
 module.exports.loop = function () {
     
     //clears memory of unused creep names
@@ -50,10 +55,6 @@ module.exports.loop = function () {
     CLAIM - 600
     TOUGH - 10
     */
-    var MAX_HARVESTER = 5;
-    var MAX_UPGRADER = 5;
-    var MAX_BUILDER = 3;
-    var MAX_MAINTAINER = 2;
     
 
     if (harvesterCount < MAX_HARVESTER){
