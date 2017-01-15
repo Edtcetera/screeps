@@ -66,6 +66,6 @@ module.exports.loop = function () {
     }
     
     else if (maintainerCount < 5){
-        spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + (maintainerCounter+1), {role: 'maintainer'});
+        spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + (maintainerCount+1), {role: 'maintainer'});
     }
 }
