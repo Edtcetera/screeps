@@ -5,9 +5,9 @@ var roleBuilder = require('role.builder');
 var roleMaintainer = require('role.maintainer');
 var roleHauler = require('role.hauler');
 
-var MAX_HARVESTER = 3;
+var MAX_HARVESTER = 4;
 var MAX_UPGRADER = 8;
-var MAX_BUILDER = 3;
+var MAX_BUILDER = 5;
 var MAX_MAINTAINER = 3;
 var MAX_HAULER = 3;
 
@@ -70,7 +70,7 @@ module.exports.loop = function () {
     }
     else if (haulerCount < MAX_HAULER){
         for (var i = 0; i < MAX_HAULER; i++){
-            spawn.createCreep([WORK, CARRY, MOVE], 'Hauler ' + (i+1), {role: 'hauler'});
+            spawn.createCreep([WORK, CARRY, CARRY, CARRY, MOVE], 'Hauler ' + (i+1), {role: 'hauler'});
         }
     }
     else if (upgraderCount < MAX_UPGRADER){
