@@ -55,20 +55,27 @@ module.exports.loop = function () {
     var MAX_BUILDER = 3;
     var MAX_MAINTAINER = 2;
     
-    for(var i = 0; i < 5; i++){
+
         if (harvesterCount < MAX_HARVESTER){
-            spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Harvester ' + (i+1), {role: 'harvester'});
+            for (var i = 0; i < MAX_HARVESTER; i++){
+                spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Harvester ' + (i+1), {role: 'harvester'});   
+            }
         }
-    
         else if (upgraderCount < MAX_UPGRADER){
-            spawn.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], 'Upgrader ' + (i+1), {role: 'upgrader'}); 
+            for (var i = 0; i < MAX_UPGRADER; i++){
+                spawn.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], 'Upgrader ' + (i+1), {role: 'upgrader'}); 
+            }
         }
         else if (builderCount < MAX_BUILDER){
-            spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Builder ' + (i+1), {role: 'builder'});
+            for (var i = 0; i < MAX_BUILDER; i++){
+                spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Builder ' + (i+1), {role: 'builder'});   
+            }
         }
     
         else if (maintainerCount < MAX_MAINTAINER){
-            spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + (i+1), {role: 'maintainer'});
+            for (var i = 0; i < MAX_MAINTAINER){
+                spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + (i+1), {role: 'maintainer'});    
+            }
         }
     }
 }
