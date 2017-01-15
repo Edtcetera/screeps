@@ -4,6 +4,8 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleMaintainer = require('role.maintainer');
 
+//test test
+
 module.exports.loop = function () {
     
     //clears memory of unused creep names
