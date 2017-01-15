@@ -2,6 +2,7 @@
     1. Pickup resources from storage //todo
     2. Upgrade Controller
 */
+var _ = require('lodash');
 
 var roleUpgrader = {
 
@@ -25,12 +26,10 @@ var roleUpgrader = {
         else {
             var sources = creep.room.find(FIND_STRUCTURES, {
 	            filter: {structureType: STRUCTURE_CONTAINER}
-	        }).sort(function(a,b){
-	            a.store[RESOURCE_ENERGY]-b.store[RESOURCE_ENERGY];
 	        });
-	        
-            if(creep.withdraw(sources[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
+	        var orderedSources = _.sortByOrder(sources, function(e){ return e.store[RESOURCE_ENERGY]},['desc']);
+            if(creep.withdraw(orderedSources[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(orderedSources[0]);
             }
         }
 	}
