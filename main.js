@@ -54,18 +54,18 @@ module.exports.loop = function () {
     */
     
     if (harvesterCount < 5){
-        spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Harvester ' + harvesterCount+1, {role: 'harvester'});
+        spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Harvester ' + (harvesterCount+1), {role: 'harvester'});
     }
     
     else if (upgraderCount < 6){
-        spawn.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], 'Upgrader ' + upgraderCount+1, {role: 'upgrader'}); 
+        spawn.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], 'Upgrader ' + (upgraderCount+1), {role: 'upgrader'}); 
     }
     
     else if (builderCount < 5){
-        spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Builder ' + builderCount+1, {role: 'builder'});
+        spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Builder ' + (builderCount+1), {role: 'builder'});
     }
     
     else if (maintainerCount < 5){
-        spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + maintainerCounter+1, {role: 'maintainer'});
+        spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + (maintainerCounter+1), {role: 'maintainer'});
     }
 }

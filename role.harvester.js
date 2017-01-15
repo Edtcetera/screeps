@@ -18,18 +18,30 @@ var roleHarvester = {
             }
         }
         else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
-            console.log('spawn is not full');
             if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(Game.spawns['Spawn1']);
             }
         }
         else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
-            creep.memory.building = true;
-            var buildTargets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            if(buildTargets.length) {
-                if(creep.build(buildTargets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(buildTargets[0]);
-                }
+            //fill extensions
+            var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+                filter: { structureType: STRUCTURE_EXTENSION}
+            });
+            var sortedExtensions = extensions.sort();
+            if (sortedExtensions[0].energy < sortedExtensions[0].energyCapacity){
+                if (creep.transfer(sortedExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(sortedExtensions[0]);
+                } 
+            }
+            else{
+            //build
+                creep.memory.building = true;
+                var buildTargets = creep.room.find(FIND_CONSTRUCTION_SITES);
+                if(buildTargets.length) {
+                    if(creep.build(buildTargets[0]) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(buildTargets[0]);
+                    }
+                }   
             }
         }
     }
