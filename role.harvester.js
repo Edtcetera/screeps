@@ -7,7 +7,11 @@ var roleHarvester = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        if(creep.carry.energy < creep.carryCapacity) {
+        if(creep.carry.energy == 0){
+            creep.memory.building = false;
+        }
+        
+        if(!creep.memory.building && creep.carry.energy < creep.carryCapacity) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[0]);
@@ -20,6 +24,7 @@ var roleHarvester = {
             }
         }
         else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
+            creep.memory.building = true;
             var buildTargets = creep.room.find(FIND_CONSTRUCTION_SITES);
             if(buildTargets.length) {
                 if(creep.build(buildTargets[0]) == ERR_NOT_IN_RANGE) {
