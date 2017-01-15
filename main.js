@@ -3,11 +3,12 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleMaintainer = require('role.maintainer');
+var roleHauler = require('role.hauler');
 
 var MAX_HARVESTER = 5;
 var MAX_UPGRADER = 8;
 var MAX_BUILDER = 3;
-var MAX_MAINTAINER = 2;
+var MAX_MAINTAINER = 3;
 
 module.exports.loop = function () {
     
