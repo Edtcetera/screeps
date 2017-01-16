@@ -6,10 +6,10 @@ var roleMaintainer = require('role.maintainer');
 var roleHauler = require('role.hauler');
 
 var MAX_HARVESTER = 4;
-var MAX_UPGRADER = 8;
-var MAX_BUILDER = 5;
-var MAX_MAINTAINER = 3;
-var MAX_HAULER = 3;
+var MAX_UPGRADER = 6;
+var MAX_BUILDER = 6;
+var MAX_MAINTAINER = 4;
+var MAX_HAULER = 2;
 
 module.exports.loop = function () {
     //clears memory of unused creep names
@@ -61,11 +61,13 @@ module.exports.loop = function () {
     CLAIM - 600
     TOUGH - 10
     */
+    console.log('Harvesters:' + harvesterCount + ' , Haulers:' + haulerCount + ' , Upgrader:' + upgraderCount + ' , Builder:' + builderCount +
+        ' , Maintainer:' + maintainerCount);
     
 
     if (harvesterCount < MAX_HARVESTER){
         for (var i = 0; i < MAX_HARVESTER; i++){
-            spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Harvester ' + (i+1), {role: 'harvester'});   
+            spawn.createCreep([WORK, WORK, WORK, CARRY, MOVE], 'Harvester ' + (i+1), {role: 'harvester'});   
         }
     }
     else if (haulerCount < MAX_HAULER){

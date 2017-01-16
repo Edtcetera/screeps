@@ -25,7 +25,7 @@ var roleHauler = {
             var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
                 filter: { structureType: STRUCTURE_EXTENSION}
             });
-            var sortedExtensions = _.sortByOrder(extensions, function(e){ return e.energy}, ['desc']);
+            var sortedExtensions = _.sortByOrder(extensions, function(e){ return e.energy}, ['asc']);
             
             if (sortedExtensions[0].energy < sortedExtensions[0].energyCapacity){
                 if (creep.transfer(sortedExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
