@@ -12,13 +12,18 @@ var roleHarvester = {
         
         if(creep.carry.energy < creep.carryCapacity) {
             var sources = creep.room.find(FIND_SOURCES);
-            if (creep.name == 'Harvester 4'){ //one creep mines the other node, hardcoded TODO
+            if (creep.name == 'Harvester 3'){ //one creep mines the other node, hardcoded TODO
                 if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE){
                     creep.moveTo(sources[1]);
                 }
             }
             else if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[0]);
+            }
+        }
+        else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity && containerListFull(containerList)) {
+            if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(Game.spawns['Spawn1']);
             }
         }
         else if(containerList.length){ //containers exist, dump resource in containers
@@ -32,7 +37,7 @@ var roleHarvester = {
                 creep.moveTo(Game.spawns['Spawn1']);
             }
         }
-                else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
+        else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
             //fill extensions
             var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
                 filter: { structureType: STRUCTURE_EXTENSION}
@@ -47,5 +52,15 @@ var roleHarvester = {
         }
     }
 };
+
+function containerListFull(containerList){
+    for (var container in containerList){
+        if (containerList[container].store[RESOURCE_ENERGY] < containerList[container].storeCapacity){
+            return false;
+        }
+    }
+    console.log('containers are full, DEPOSIT in SPAWN');
+    return true;
+}
 
 module.exports = roleHarvester;
