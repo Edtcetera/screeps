@@ -6,10 +6,10 @@ var roleMaintainer = require('role.maintainer');
 var roleHauler = require('role.hauler');
 
 var MAX_HARVESTER = 4;
-var MAX_UPGRADER = 6;
-var MAX_BUILDER = 6;
-var MAX_MAINTAINER = 4;
-var MAX_HAULER = 2;
+var MAX_UPGRADER = 5;
+var MAX_BUILDER = 3;
+var MAX_MAINTAINER = 3;
+var MAX_HAULER = 1;
 
 module.exports.loop = function () {
     //clears memory of unused creep names
@@ -64,30 +64,34 @@ module.exports.loop = function () {
     console.log('Harvesters:' + harvesterCount + ' , Haulers:' + haulerCount + ' , Upgrader:' + upgraderCount + ' , Builder:' + builderCount +
         ' , Maintainer:' + maintainerCount);
     
+    var sources = creep.room.find(FIND_STRUCTURES, {
+	   filter: {structureType: STRUCTURE_CONTAINER}
+	});
+    
 
     if (harvesterCount < MAX_HARVESTER){
         for (var i = 0; i < MAX_HARVESTER; i++){
             spawn.createCreep([WORK, WORK, WORK, CARRY, MOVE], 'Harvester ' + (i+1), {role: 'harvester'});   
         }
     }
-    else if (haulerCount < MAX_HAULER){
+    else if (haulerCount < MAX_HAULER && sources.length > 0){
         for (var i = 0; i < MAX_HAULER; i++){
-            spawn.createCreep([WORK, CARRY, CARRY, CARRY, MOVE], 'Hauler ' + (i+1), {role: 'hauler'});
+            spawn.createCreep([WORK, WORK, WORK, CARRY, MOVE], 'Hauler ' + (i+1), {role: 'hauler'});
         }
     }
-    else if (upgraderCount < MAX_UPGRADER){
+    else if (upgraderCount < MAX_UPGRADER && sources.length > 0){
         for (var i = 0; i < MAX_UPGRADER; i++){
-            spawn.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], 'Upgrader ' + (i+1), {role: 'upgrader'}); 
+            spawn.createCreep([WORK, WORK, WORK, CARRY, MOVE], 'Upgrader ' + (i+1), {role: 'upgrader'}); 
         }
     }
     else if (builderCount < MAX_BUILDER){
         for (var i = 0; i < MAX_BUILDER; i++){
-            spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Builder ' + (i+1), {role: 'builder'});   
+            spawn.createCreep([WORK, WORK, WORK, CARRY, MOVE], 'Builder ' + (i+1), {role: 'builder'});   
         }
     }
-    else if (maintainerCount < MAX_MAINTAINER){
+    else if (maintainerCount < MAX_MAINTAINER && sources.length > 0){
         for (var i = 0; i < MAX_MAINTAINER; i++){
-            spawn.createCreep([WORK, CARRY, MOVE, MOVE, MOVE], 'Maintainer ' + (i+1), {role: 'maintainer'});    
+            spawn.createCreep([WORK, WORK, WORK, CARRY, MOVE], 'Maintainer ' + (i+1), {role: 'maintainer'});    
         }
     }
 }

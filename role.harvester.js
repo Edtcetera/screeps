@@ -27,6 +27,24 @@ var roleHarvester = {
                 creep.moveTo(target);
             }
         }
+        else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
+            if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(Game.spawns['Spawn1']);
+            }
+        }
+                else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
+            //fill extensions
+            var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+                filter: { structureType: STRUCTURE_EXTENSION}
+            });
+            var sortedExtensions = _.sortByOrder(extensions, function(e){ return e.energy}, ['asc']);
+            
+            if (sortedExtensions[0].energy < sortedExtensions[0].energyCapacity){
+                if (creep.transfer(sortedExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(sortedExtensions[0]);
+                } 
+            }
+        }
     }
 };
 

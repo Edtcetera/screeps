@@ -23,6 +23,9 @@ var roleMaintainer = {
 
 	    if(creep.memory.maintaining) {
 	        var targets = creep.room.find(FIND_STRUCTURES).filter(checkDamagedStructures);
+	        
+	        var orderedTargets = _.sortByOrder(targets, function(e){ return e.hits}, ['asc']); //todo: when target found, keep repairing until full
+	        
             if(targets.length) {
                 if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0]);

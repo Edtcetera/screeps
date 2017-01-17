@@ -10,6 +10,9 @@ var roleBuilder = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+            var sources = creep.room.find(FIND_STRUCTURES, {
+	            filter: {structureType: STRUCTURE_CONTAINER}
+	        });
 
 	    if(creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
@@ -28,10 +31,13 @@ var roleBuilder = {
                 }
             }
 	    }
+	    else if (sources.length == 0){
+	        var harvestNode = creep.room.find(FIND_SOURCES);
+	        if (creep.harvest(harvestNode[0]) == ERR_NOT_IN_RANGE){
+	            creep.moveTo(harvestNode[0]);
+	        }
+	    }
 	    else {
-            var sources = creep.room.find(FIND_STRUCTURES, {
-	            filter: {structureType: STRUCTURE_CONTAINER}
-	        });
 	        var orderedSources = _.sortByOrder(sources, function(e){ return e.store[RESOURCE_ENERGY]},['desc']);
             if(creep.withdraw(orderedSources[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(orderedSources[0]);
