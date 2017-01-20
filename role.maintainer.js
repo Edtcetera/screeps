@@ -22,21 +22,25 @@ var roleMaintainer = {
 	    }
 
 	    if(creep.memory.maintaining) {
+	        var myTargets = creep.room.find(FIND_MY_STRUCTURES).filter(checkDamagedStructures);
 	        var targets = creep.room.find(FIND_STRUCTURES).filter(checkDamagedStructures);
 	        
-	        var orderedTargets = _.sortByOrder(targets, function(e){ return e.hits}, ['asc']); //todo: when target found, keep repairing until full
+	        var orderedMyTargets = _.sortByOrder(myTargets, function(e){return e.hitsMax-e.hits}, ['desc']); //sort by biggest missing health
+	        var orderedTargets = _.sortByOrder(targets, function(e){ return e.hitsMax-e.hits}, ['desc']); //todo: when target found, keep repairing until full
 	        
-            if(targets.length) {
-                if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0]);
+	        if(myTargets.length){
+	            if (creep.repair(orderedMyTargets[0]) == ERR_NOT_IN_RANGE){
+	                creep.moveTo(orderedMyTargets[0]);
+	            }
+	        }else if(targets.length) {
+                if(creep.repair(orderedTargets[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(orderedTargets[0]);
                 }
-            }
-            else{
+            }else{
                 creep.say('IDLE');
                 console.log('maintainer is idle');
             }
-	    }
-	    else {
+	    }else {
             var sources = creep.room.find(FIND_STRUCTURES, {
 	            filter: {structureType: STRUCTURE_CONTAINER}
 	        });

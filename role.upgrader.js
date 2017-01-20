@@ -22,8 +22,7 @@ var roleUpgrader = {
             if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller);
             }
-        }
-        else {
+        }else {
             var sources = creep.room.find(FIND_STRUCTURES, {
 	            filter: {structureType: STRUCTURE_CONTAINER}
 	        });

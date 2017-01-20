@@ -14,13 +14,11 @@ var roleHauler = {
         var orderedContainerList = _.sortByOrder(containerList, function(e){ return e.store[RESOURCE_ENERGY]},['desc']);
         if (creep.carry.energy == 0 && creep.withdraw(orderedContainerList[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
             creep.moveTo(orderedContainerList[0]);
-        }
-        else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
+        }else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
             if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(Game.spawns['Spawn1']);
             }
-        }
-        else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
+        }else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
             //fill extensions
             var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
                 filter: { structureType: STRUCTURE_EXTENSION}
@@ -31,6 +29,9 @@ var roleHauler = {
                 if (creep.transfer(sortedExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(sortedExtensions[0]);
                 } 
+            }else{
+                creep.say('idle');
+                creep.moveTo(41,8);
             }
         }
     }
