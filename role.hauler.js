@@ -29,6 +29,13 @@ var roleHauler = {
                 if (creep.transfer(sortedExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(sortedExtensions[0]);
                 } 
+            }else if (orderedContainerList[0].store[RESOURCE_ENERGY] != 0){
+                 var storageList = Game.spawns.Spawn1.room.find(FIND_STRUCTURES, {
+                        filter: { structureType: STRUCTURE_STORAGE}
+                    });
+                if (creep.transfer(storageList[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(storageList[0]);
+                }
             }else{
                 creep.say('idle');
                 creep.moveTo(41,8);

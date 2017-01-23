@@ -25,8 +25,8 @@ var roleMaintainer = {
 	        var myTargets = creep.room.find(FIND_MY_STRUCTURES).filter(checkDamagedStructures);
 	        var targets = creep.room.find(FIND_STRUCTURES).filter(checkDamagedStructures);
 	        
-	        var orderedMyTargets = _.sortByOrder(myTargets, function(e){return e.hitsMax-e.hits}, ['desc']); //sort by biggest missing health
-	        var orderedTargets = _.sortByOrder(targets, function(e){ return e.hitsMax-e.hits}, ['desc']); //todo: when target found, keep repairing until full
+	        var orderedMyTargets = _.sortByOrder(myTargets, function(e){return e.hits/e.hitsMax}, ['asc']); //sort by missing most proportional health
+	        var orderedTargets = _.sortByOrder(targets, function(e){ return e.hits/e.hitsMax}, ['asc']); //todo: when target found, keep repairing until full
 	        
 	        if(myTargets.length){
 	            if (creep.repair(orderedMyTargets[0]) == ERR_NOT_IN_RANGE){
@@ -44,7 +44,12 @@ var roleMaintainer = {
             var sources = creep.room.find(FIND_STRUCTURES, {
 	            filter: {structureType: STRUCTURE_CONTAINER}
 	        });
-	        var orderedSources = _.sortByOrder(sources, function(e){ return e.store[RESOURCE_ENERGY]},['desc']);
+	        
+	        var storages = creep.room.find(FIND_STRUCTURES, {
+	            filter: {structureType: STRUCTURE_STORAGE}
+	        });
+	        
+	        var orderedSources = _.sortByOrder(storages, function(e){ return e.store[RESOURCE_ENERGY]},['desc']);
             if(creep.withdraw(orderedSources[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(orderedSources[0]);
             }

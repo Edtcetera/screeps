@@ -12,7 +12,7 @@ var roleHarvester = {
         
         if(creep.carry.energy < creep.carryCapacity) {
             var sources = creep.room.find(FIND_SOURCES);
-            if (creep.name == 'Harvester 3'){ //one creep mines the other node, hardcoded TODO
+            if (creep.name == 'Harvester2'){ //one creep mines the other node, hardcoded TODO
                 if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE){
                     creep.moveTo(sources[1]);
                 }
@@ -34,7 +34,7 @@ var roleHarvester = {
             }
         }else if (Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity){
             //fill extensions
-            var extensions = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+            var extensions = creep.room.find(FIND_MY_STRUCTURES, {
                 filter: { structureType: STRUCTURE_EXTENSION}
             });
             var sortedExtensions = _.sortByOrder(extensions, function(e){ return e.energy}, ['asc']);
