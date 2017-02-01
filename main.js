@@ -4,14 +4,19 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleMaintainer = require('role.maintainer');
 var roleHauler = require('role.hauler');
+var roleTowerFiller = require('role.towerFill');
 
 var MAX_HARVESTER = 2;
-var MAX_UPGRADER = 6;
-var MAX_BUILDER = 4;
-var MAX_MAINTAINER = 3;
-var MAX_HAULER = 3;
+var MAX_HAULER = 2;
+var MAX_UPGRADER = 3;
+var MAX_BUILDER = 3;
+var MAX_MAINTAINER = 0;
+var MAX_TOWERFILLER = 3;
 
 module.exports.loop = function () {
+    
+    defendRoom('W78N26');
+    
     //clears memory of unused creep names
     for(var i in Memory.creeps) {
         if(!Game.creeps[i]) {
@@ -24,6 +29,7 @@ module.exports.loop = function () {
     var builderCount = 0;
     var maintainerCount = 0;
     var haulerCount = 0;
+    var towerFillerCount = 0;
     var spawn = Game.spawns.Spawn1;
     
 
@@ -54,6 +60,10 @@ module.exports.loop = function () {
             roleHauler.run(creep);
             haulerCount++;
         }
+        if (creep.memory.role == 'towerFiller'){
+            roleTowerFiller.run(creep);
+            towerFillerCount++;
+        }
     }
     
     /*
@@ -67,32 +77,59 @@ module.exports.loop = function () {
     TOUGH - 10
     */
     console.log('Harvesters:' + harvesterCount + ' , Haulers:' + haulerCount + ' , Upgrader:' + upgraderCount + ' , Builder:' + builderCount +
-        ' , Maintainer:' + maintainerCount);
+        ' , Maintainer:' + maintainerCount + ' , TowerFiller:' + towerFillerCount);
     
 
     if (harvesterCount < MAX_HARVESTER){
         for (var i = 0; i < MAX_HARVESTER; i++){
-            spawn.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE], 'Harvester' + (i+1), {role: 'harvester'});   
+            spawn.createCreep([WORK, WORK, WORK, WORK, WORK, CARRY, MOVE], 'Harvester' + (i+1), {role: 'harvester'});   
         }
     }
     else if (haulerCount < MAX_HAULER){
         for (var i = 0; i < MAX_HAULER; i++){
-            spawn.createCreep([CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], 'Hauler' + (i+1), {role: 'hauler'});
+            spawn.createCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Hauler' + (i+1), {role: 'hauler'});
         }
     }
     else if (upgraderCount < MAX_UPGRADER){
         for (var i = 0; i < MAX_UPGRADER; i++){
-            spawn.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Upgrader' + (i+1), {role: 'upgrader'}); 
+            spawn.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Upgrader' + (i+1), {role: 'upgrader'}); 
         }
     }
     else if (builderCount < MAX_BUILDER){
         for (var i = 0; i < MAX_BUILDER; i++){
-            spawn.createCreep([WORK, WORK, CARRY, MOVE], 'Builder' + (i+1), {role: 'builder'});   
+            spawn.createCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Builder' + (i+1), {role: 'builder'});   
         }
     }
     else if (maintainerCount < MAX_MAINTAINER){
         for (var i = 0; i < MAX_MAINTAINER; i++){
-            spawn.createCreep([WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Maintainer' + (i+1), {role: 'maintainer'});    
+            spawn.createCreep([WORK, CARRY, MOVE], 'Maintainer' + (i+1), {role: 'maintainer'});    
         }
     }
+    else if (towerFillerCount < MAX_TOWERFILLER){
+        for (var i = 0; i < MAX_TOWERFILLER; i++){
+            spawn.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], 'TowerFiller' + (i+1), {role: 'towerFiller'});    
+        }
+    }
+}
+
+
+function defendRoom(roomName) {
+    
+    var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
+    var towers = Game.rooms[roomName].find(FIND_MY_STRUCTURES, {
+        filter: {structureType: STRUCTURE_TOWER}
+    });
+    var damagedStructures = Game.rooms[roomName].find(FIND_STRUCTURES, {
+        filter: (structure) => structure.hits < structure.hitsMax
+    });
+
+    
+    if (damagedStructures.length > 0){
+        towers.forEach(tower => tower.repair(damagedStructures[0]));
+    }
+    
+    if(hostiles.length > 0) {
+        towers.forEach(tower => tower.attack(hostiles[0]));
+    }
+
 }

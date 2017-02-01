@@ -6,7 +6,6 @@ var _ = require('lodash');
 var roleHauler = {
     /** @param {Creep} creep **/
     run: function(creep) {
-        //TODO
         var containerList = Game.spawns.Spawn1.room.find(FIND_STRUCTURES, {
             filter: { structureType: STRUCTURE_CONTAINER}
         });
