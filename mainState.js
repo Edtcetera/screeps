@@ -4,82 +4,81 @@
 var terminator = {
     state: undefined,
     states: {
-        playing: {
+        phase0: {
             initialize: function(target) {
                 this.target = target;
             },
-
             enter: function() {
-                console.log('setting up terminator');
+                console.log('setting up phase0');
             },
             execute: function() {
-                console.log('playing');
+                console.log('phase0');
             },
             play: function() {
-                console.log('stuffs');
+                console.log('already phase0!');
             },
             stop: function() {
-                this.target.changeState(this.target.states.stopping);
+                this.target.changeState(this.target.states.phase1);
             },
             pause: function() {
-                this.target.changeState(this.target.states.pausing);
+                this.target.changeState(this.target.states.phase2);
             },
             exit: function() {
-                console.log('tearing down playing state');
+                console.log('tearing down phase0 state');
             }
         },
-        stopping:{
+        phase1:{
             initialize: function(target) {
                 this.target = target;
             },
             enter: function() {
-                console.log('setting up stopping state');
+                console.log('setting up phase1 state');
             },
             execute: function() {
-                console.log('stopping!');
+                console.log('phase1!');
             },
             play: function() {
-                this.target.changeState(this.target.states.playing);
+                this.target.changeState(this.target.states.phase0);
             },
             stop: function() {
                 console.log('already stopped!');
             },
             pause: function() {
-                this.target.changeState(this.target.states.pausing);
+                this.target.changeState(this.target.states.phase2);
+            },
+            exit: function() {
+                console.log('tearing down phase1 state');
             }
         },
-        pausing: {
+        phase2: {
             initialize: function(target) {
                 this.target = target;
             },
             enter: function() {
-                console.log('settup up the pausing state');
-            },
-            enter: function() {
-                console.log('setting up the pausing state');
+                console.log('setting up the phase2 state');
             },
             execute: function() {
-                console.log('pausing!');
+                console.log('phase2!');
             },
             play: function() {
-                this.target.changeState(this.target.states.playing);
+                this.target.changeState(this.target.states.phase0);
             },
             stop: function() {
-                this.target.changeState(this.target.states.stopping);
+                this.target.changeState(this.target.states.phase1);
             },
             pause: function() {
                 console.log('already paused');
             },
             exit: function() {
-                console.log('tearing down pausing state!');
+                console.log('tearing down phase2 state!');
             }
         }
     },
     initialize: function() {
-        this.states.playing.initialize(this);
-        this.states.stopping.initialize(this);
-        this.states.pausing.initialize(this);
-        this.state = this.states.stopping;
+        this.states.phase0.initialize(this);
+        this.states.phase1.initialize(this);
+        this.states.phase2.initialize(this);
+        this.state = this.states.phase1;
     },
     play: function() {
         this.state.play();
